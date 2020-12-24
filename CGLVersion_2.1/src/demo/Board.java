@@ -13,7 +13,11 @@ class Board {
      */
     int n;
     int[][] liveCells;
-    public void createBoard(final int n, int[][] liveCells) {
+    public Board(int i, int[][] live) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void createBoard(final int n, int[][] liveCells) {
         // your code goes here...
         this.n=n;
         this.liveCells=liveCells;
