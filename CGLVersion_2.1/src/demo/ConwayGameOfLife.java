@@ -1,64 +1,39 @@
 package demo;
-import java.util.Scanner;
+
+
+
+//Took reference from geeksforgeeks 
 
 public class ConwayGameOfLife extends Board {
+	public ConwayGameOfLife(int size, int[][] cell) {
+		super(size, cell);
+		// TODO Auto-generated constructor stub
+	}
 
-    /**
-     * Creates initial genration [borad]
-     * @param n  size of the board n X n
-     * @param l[][]  array of live cells
-     */
-    public boolean[][] createBoard(int n, int l[][]) {
-    }
-
-    /**
-     * Check for the writeup on how to print the board.
-     * @param board[][]
-     * @param n
-     * @return
-     */
-    public void printBoard(boolean board[][]) {
-    }
-
-    /**
-     * Method to gerate a next generation. Call the printBoard
-     * to print the next generation.
-     * 
-     * @param board[][] board
-     * 
-     */
-    public void generateNextGeneration(boolean board[][]) {
-    }
-
-    /**
-     * Do not modify this main Method.
-     * 
-     * @param args
-     * @return
-     */
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        // Reading size of the Board
-        int n = sc.nextInt();
-        
-        // Reading no. of initial live cells
-        int m = sc.nextInt();
-        int[][] l = new int[m][2];
-        int i = 0;
-        
-        // Reading Live cells
-        while (sc.hasNextInt()) {
-            l[i][0] = sc.nextInt();
-            l[i++][1] = sc.nextInt();
-        }
-        
-        // creating instance to CGLVersion2
-        ConwaysGameOfLife c = new ConwaysGameOfLife();
-        
-        // creating nextgenratin by calling nextgenration method
-        c.generateNextGeneration(c.createBoard(n, l));
-        sc.close();
-    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[][] arrayint=new int[6][2];
+		 arrayint[0][0]=0;
+		 arrayint[0][1]=4;
+		 arrayint[1][0]=1;
+		 arrayint[1][1]=1;
+		 arrayint[2][0]=2;
+		 arrayint[2][1]=1;
+		 arrayint[3][0]=3;
+		 arrayint[3][1]=2;
+		 arrayint[4][0]=5;
+		 arrayint[4][1]=4;
+		 
+		 Board b = new Board(6,arrayint);
+		 boolean[][] newboard=b.createBoard(6, arrayint);
+		System.out.println(b.printBoard(newboard));
+		
+		
+		b.generateNextGeneration(newboard);
+		
+		
+		
+		
+	}
 
 }
