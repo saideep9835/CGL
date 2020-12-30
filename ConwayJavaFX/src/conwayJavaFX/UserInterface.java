@@ -21,9 +21,10 @@ import javafx.scene.shape.Rectangle;
  * <p> Description: A JavaFX demonstration application: This controller class describes the user
  * interface for the Conway's Game of Life </p>
  * 
- * <p> Copyright: Lynn Robert Carter Â© 2018-05-06 </p>
+ * <p> Copyright: Lynn Robert Carter © 2018-05-06 </p>
  * 
  * @author Lynn Robert Carter
+ * @author Sunder(2020501080)
  * 
  * @version 2.03	2018-05-07 An implementation baseline for JavaFX graphics
  * 
@@ -77,10 +78,10 @@ public class UserInterface {
 	// These attributes define the Board used by the simulation and the graphical representation
 	// There are two Boards. The previous Board and the new Board.  Once the new Board has been
 	// displayed, it becomes the previous Board for the generation of the next new Board.
-	//private Board oddGameBoard = new Board();		// The Board for odd frames of the animation
+	private Board oddGameBoard = new Board(boardSizeWidth, boardSizeHeight);		// The Board for odd frames of the animation
 	private Pane oddCanvas = new Pane();			// Pane that holds its graphical representation
 	
-	//private Board evenGameBoard =  new Board();	// The Board for even frames of the animation
+	private Board evenGameBoard =  new Board(boardSizeWidth, boardSizeHeight);	// The Board for even frames of the animation
 	private Pane evenCanvas = new Pane();			// Pane that holds its graphical representation
 
 	private boolean toggle = true;					// A two-state attribute that specifies which
@@ -266,6 +267,27 @@ public class UserInterface {
 	 */
 	private void loadImageData() {
 		try {
+			str_FileName = text_FileName.getText();	
+			Scanner sn = new Scanner(new File(str_FileName));
+			int count = 0;
+			while(sn.hasNextLine()) {
+				String[] s = sn.nextLine().split(" ");
+				count++;
+			}
+			int l[][] = new int[count][2];
+				
+			sn = new Scanner(new File(str_FileName));
+			int i = 0;
+			while(sn.hasNextLine()) {
+				String[] s = sn.nextLine().split(" ");
+				l[i][0] = Integer.parseInt(s[0]);
+				l[i][1] = Integer.parseInt(s[1]);
+				i++;
+				
+			}
+			oddGameBoard.createBoard(l);
+			draw();
+			
 			// Your code goes here......
 			
 		}
@@ -307,6 +329,19 @@ public class UserInterface {
 		// Use the toggle to flip back and forth between the current generation and next generation boards.
 		
 		// Your code goes here...
+		if(toggle) {
+			oddGameBoard.nextGeneration(evenGameBoard);
+			toggle = false;
+			//System.out.println(oddGameBoard);
+		}
+		else {
+			evenGameBoard.nextGeneration(oddGameBoard);
+			toggle = true;
+			//System.out.println(evenGameBoard);
+			
+		}
+		draw();
+		
 	}
 
 	/**********
@@ -385,4 +420,30 @@ public class UserInterface {
 		errorMessage_FileContents = "";
 		return true;							// End of file found 
 	}
-}
+	/*
+	 * this function adds rectangles to the alive cells(to window)
+	 */
+	public void draw() {
+		Board board;
+		if(toggle) {
+			board = oddGameBoard;
+			
+		}
+		else {
+			board = evenGameBoard;
+		}
+		for(int i = 0; i<board.rows; i++) {
+			for(int j= 0; j<board.columns; j++) {
+				if(board.grid[i][j].isAlive) {
+					Rectangle rect = new Rectangle(5,5,Color.GREEN);
+					rect.relocate(6*i, 6*j);
+					window.getChildren().add(rect);
+				}
+			}
+				
+			}
+		}
+		
+	}
+
+
